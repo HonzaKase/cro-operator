@@ -63,17 +63,21 @@ Tenhle krok nemusíš dělat předem — `/cro-operator:cro` i `/cro-operator:se
 
 ## 5. Instalace pluginu
 
+Instaluj **pevnou verzi** (tag) — nic se pak nezmění bez tvého vědomí.
+
 V terminálu:
 ```
-claude plugin marketplace add HonzaKase/cro-operator
+claude plugin marketplace add HonzaKase/cro-operator#v0.2.2
 claude plugin install cro-operator@honza-kase
 ```
 
 Nebo uvnitř Claude Code:
 ```
-/plugin marketplace add HonzaKase/cro-operator
+/plugin marketplace add HonzaKase/cro-operator#v0.2.2
 /plugin install cro-operator@honza-kase
 ```
+
+Ověř, co se nainstalovalo: `claude plugin details cro-operator` → `Hooks (0)` a `MCP servers (0)`.
 
 Restartuj Claude Code a spusť kontrolu:
 ```
@@ -122,7 +126,15 @@ Command se doptá na segment, typ stránky a primární konverzi (navrhne je sá
 
 ## Aktualizace a odinstalace
 
-- Aktualizace: `claude plugin update cro-operator@honza-kase`, nebo zapni auto-update v `/plugin` → Marketplaces → `honza-kase`.
+- Aktualizace: přečti [CHANGELOG.md](../CHANGELOG.md), pak přejdi na nový tag:
+
+```
+claude plugin marketplace remove honza-kase
+claude plugin marketplace add HonzaKase/cro-operator#vX.Y.Z
+claude plugin install cro-operator@honza-kase
+```
+
+  Po aktualizaci znovu `claude plugin details cro-operator` → `Hooks (0)` a `MCP servers (0)`. Automatickou aktualizaci nezapínej.
 - Odinstalace: `claude plugin uninstall cro-operator@honza-kase`, případně i `claude plugin marketplace remove honza-kase`.
 
 ---
