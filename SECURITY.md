@@ -15,6 +15,26 @@ CRO Operator pracuje s tvým prohlížečem, s analytikou cizích webů a volite
 | **Data klienta odcházejí do Claude (Anthropic)** — čísla z Clarity, obsah webu, screenshoty | — | Když auditujete cizí web, mělo by to pokrývat vaše smluvní ujednání s klientem. |
 | **Výstupy auditu jsou klientská data** | Ukládají se jen do `./cro/<klient>/`. `.gitignore` v tomhle repu je nepustí dovnitř. | Pokud pracuješ v gitovém repu webu, přidej `cro/` do jeho `.gitignore`. |
 
+## Důvěra a aktualizace
+
+Plugin pro Claude Code může obecně na tvém počítači spustit libovolný kód s tvými právy (hooky, MCP servery, spustitelné soubory) a jeho instrukce řídí, co Claude dělá s nástroji, které už má. Anthropic cizí pluginy neověřuje. Proto:
+
+**Co obsahuje tenhle plugin:** jen Markdown instrukce (commandy, agenti, skilly), šablonu Wordu a dva JSON manifesty. **Žádné hooky, MCP servery, LSP servery ani spustitelné soubory.** Ověříš si to sám:
+
+```
+claude plugin details cro-operator
+```
+
+→ musí ukázat `Hooks (0)`, `MCP servers (0)`, `LSP servers (0)`.
+
+**Závazek autora:** pokud se tohle někdy změní, vyjde to jako nová **hlavní** verze a bude to první řádek jejího záznamu v [CHANGELOG.md](CHANGELOG.md). GitHub Action `guard` nechá selhat každou změnu, která by hooky, MCP/LSP servery nebo spustitelné soubory přidala.
+
+**Jak se chránit:**
+1. **Instaluj pevnou verzi** (`HonzaKase/cro-operator#vX.Y.Z`) — nic se nezmění bez tvého vědomí.
+2. **Automatickou aktualizaci nezapínej.** Před přechodem na novou verzi si přečti changelog, ideálně i rozdíl mezi tagy na GitHubu.
+3. **Po každé aktualizaci** znovu `claude plugin details cro-operator`.
+4. **Nepouštěj plugin s vypnutými dotazy na oprávnění** — systém oprávnění Claude Code je poslední pojistka pro všechno, co Claude spouští.
+
 ## Co plugin nedělá
 
 - Nepřihlašuje se za tebe — login do Clarity děláš vždy sám.

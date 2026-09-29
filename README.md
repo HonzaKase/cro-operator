@@ -43,8 +43,10 @@ Clarity API heatmapy nevrací vůbec a vidí jen poslední 3 dny. V dashboardu j
 
 ## Instalace (zkrácená)
 
+Doporučuju instalovat **pevnou verzi** (tag) — dostaneš přesně to, co je v ní, a nic se nezmění bez tvého vědomí:
+
 ```
-claude plugin marketplace add HonzaKase/cro-operator
+claude plugin marketplace add HonzaKase/cro-operator#v0.2.2
 claude plugin install cro-operator@honza-kase
 ```
 
@@ -92,15 +94,24 @@ Command se na začátku zeptá i na to, **co za klienta spravuješ ty** (třeba 
 
 ## Bezpečnost v kostce
 
-Agent pracuje ve tvém skutečném Chromu. Proto: **samostatný Chrome profil jen pro tuhle práci**, token jen do terminálu (nikdy do chatu) a zapnuté maskování v Clarity. Agenti mají zakázané cokoli měnit — v Clarity i na auditovaném webu. Detaily: **[SECURITY.md](SECURITY.md)**.
+Agent pracuje ve tvém skutečném Chromu. Proto: **samostatný Chrome profil jen pro tuhle práci**, token jen do terminálu (nikdy do chatu) a zapnuté maskování v Clarity. Agenti mají zakázané cokoli měnit — v Clarity i na auditovaném webu.
+
+Plugin sám **nespouští žádný kód**: obsahuje jen Markdown instrukce, šablonu Wordu a manifesty — žádné hooky, MCP servery ani spustitelné soubory. Hlídá to GitHub Action při každé změně. Detaily a jak si to ověřit: **[SECURITY.md](SECURITY.md)**.
 
 ## Aktualizace
 
+1. Přečti si, co se změnilo: **[CHANGELOG.md](CHANGELOG.md)**.
+2. Přejdi na novou verzi (místo `vX.Y.Z` doplň tag z changelogu):
+
 ```
-claude plugin update cro-operator@honza-kase
+claude plugin marketplace remove honza-kase
+claude plugin marketplace add HonzaKase/cro-operator#vX.Y.Z
+claude plugin install cro-operator@honza-kase
 ```
 
-Nebo v Claude Code `/plugin` → Marketplaces → `honza-kase` → Enable auto-update.
+3. Ověř, že plugin pořád nic nespouští: `claude plugin details cro-operator` musí ukázat `Hooks (0)` a `MCP servers (0)`.
+
+Automatickou aktualizaci nedoporučuju zapínat — u pluginu, který řídí tvůj prohlížeč, chceš o každé změně vědět.
 
 ## Licence a autor
 

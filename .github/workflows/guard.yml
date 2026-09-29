@@ -1,0 +1,55 @@
+# Pojistka: plugin smí obsahovat jen Markdown instrukce, šablony a manifesty.
+# Build selže, když se v repu objeví cokoli, co by u uživatelů spouštělo kód
+# (hooky, MCP/LSP servery, spustitelné soubory) nebo co vypadá jako tajemství.
+name: guard
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Žádné hooky, MCP/LSP servery ani spustitelné soubory
+        run: |
+          fail=0
+          for p in hooks .mcp.json .lsp.json bin monitors settings.json; do
+            if [ -e "$p" ]; then echo "::error::Zakázaná součást pluginu: $p"; fail=1; fi
+          done
+          for f in .claude-plugin/plugin.json .claude-plugin/marketplace.json; do
+            for key in hooks mcpServers lspServers monitors commands agents skills; do
+              if jq -e --arg k "$key" '[.. | objects | has($k)] | any' "$f" > /dev/null; then
+                echo "::error::$f deklaruje '$key' — součásti mají být jen ve výchozích složkách"; fail=1
+              fi
+            done
+          done
+          bad=$(git ls-files | grep -v -E '\.(md|json|docx|yml)$|^LICENSE$|^\.gitignore$' || true)
+          if [ -n "$bad" ]; then echo "::error::Nečekané typy souborů:"; echo "$bad"; fail=1; fi
+          exit $fail
+
+      - name: Manifesty jsou platný JSON
+        run: |
+          jq empty .claude-plugin/plugin.json
+          jq empty .claude-plugin/marketplace.json
+
+      - name: Žádná tajemství
+        run: |
+          if git grep -n -I -E 'eyJ[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}'; then
+            echo "::error::Vypadá to na token nebo klíč"; exit 1
+          fi
+
+      - name: Tag odpovídá verzi v plugin.json
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          v=$(jq -r .version .claude-plugin/plugin.json)
+          if [ "v$v" != "${GITHUB_REF_NAME}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} neodpovídá verzi $v v plugin.json"; exit 1
+          fi
