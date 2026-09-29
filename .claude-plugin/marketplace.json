@@ -1,0 +1,14 @@
+{
+  "name": "honza-kase",
+  "description": "Pluginy pro Claude Code od Honzy Kaše",
+  "owner": {
+    "name": "Honza Kaše"
+  },
+  "plugins": [
+    {
+      "name": "cro-operator",
+      "source": "./",
+      "description": "CRO audit z Microsoft Clarity heatmap a scroll map přes Claude in Chrome"
+    }
+  ]
+}

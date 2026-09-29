@@ -1,0 +1,16 @@
+# Výstupy auditů — klientská data, nikdy do repa
+cro/
+cro-audits/
+*.docx
+!templates/*.docx
+!examples/*.docx
+
+# Tokeny a lokální nastavení
+.env
+.env.*
+.mcp.json
+.claude/settings.local.json
+
+# OS
+Thumbs.db
+.DS_Store
