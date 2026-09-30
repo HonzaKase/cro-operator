@@ -1,7 +1,7 @@
 {
   "name": "cro-operator",
   "displayName": "CRO Operator",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "CRO audit z Microsoft Clarity: agent si přes Claude in Chrome přečte heatmapy a scroll mapy z dashboardu, zanalyzuje strukturu stránky a sestaví audit (Markdown + Word).",
   "author": {
     "name": "Honza Kaše",

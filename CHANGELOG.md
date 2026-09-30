@@ -2,6 +2,11 @@
 
 Každá verze má v repozitáři tag `vX.Y.Z`. Pokud se někdy změní, co plugin na tvém počítači smí dělat (viz [SECURITY.md](SECURITY.md) — dnes žádné hooky, MCP servery ani spustitelné soubory), bude to vždy nová **hlavní** verze a první řádek jejího záznamu.
 
+## 0.2.3 — 2026-09-30
+
+- Pevné modely agentů místo `inherit`: `clarity-analyst` a `page-structure-analyst` na Sonnetu, `cro-strategist` na Opusu. Dřív agenti dědili model session (dnes většinou Opus, u někoho i Fable) a `inherit` navíc přebíjel proměnnou `CLAUDE_CODE_SUBAGENT_MODEL`.
+- README: sekce Modely a jak si přepnout všechny agenty na jeden model.
+
 ## 0.2.2 — 2026-09-30
 
 - Bezpečnost: doporučená instalace z pevné verze (tagu), sekce „Důvěra a aktualizace" v SECURITY.md, tenhle changelog.

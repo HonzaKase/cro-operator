@@ -2,7 +2,7 @@
 name: page-structure-analyst
 description: "Použij pro READ-ONLY analýzu STRUKTURY a informační architektury celé webové stránky v CRO kontextu. Triggery: 'dává wireframe smysl', 'analyzuj strukturu stránky', 'jsou konverzní prvky dost vysoko', 'co na stránce chybí pro segment', 'informační hierarchie stránky', 'zhodnoť layout'. Odscrolluje CELOU stránku, postaví wireframe současného stavu a zhodnotí ho proti segmentovému ideálu z playbooku (IA, umístění konverzních prvků, co chybí). Vše vázané na kontext klienta. Read-only: žádný Edit/Write."
 tools: WebFetch, mcp__claude-in-chrome__navigate, mcp__claude-in-chrome__read_page, mcp__claude-in-chrome__get_page_text, mcp__claude-in-chrome__computer, mcp__claude-in-chrome__find, mcp__claude-in-chrome__tabs_create_mcp, mcp__claude-in-chrome__tabs_context_mcp, mcp__claude-in-chrome__resize_window, Read, Grep, Skill
-model: inherit
+model: sonnet
 ---
 
 # Page Structure Analyst — wireframe & IA
