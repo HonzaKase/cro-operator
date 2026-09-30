@@ -46,7 +46,7 @@ Clarity API heatmapy nevrací vůbec a vidí jen poslední 3 dny. V dashboardu j
 Doporučuju instalovat **pevnou verzi** (tag) — dostaneš přesně to, co je v ní, a nic se nezmění bez tvého vědomí:
 
 ```
-claude plugin marketplace add HonzaKase/cro-operator#v0.2.2
+claude plugin marketplace add HonzaKase/cro-operator#v0.2.3
 claude plugin install cro-operator@honza-kase
 ```
 
@@ -57,6 +57,31 @@ Pak v Claude Code:
 ```
 
 Setup projde checklist (Chrome, přihlášení do Clarity, API, pandoc) a u každé chybějící věci ukáže přesný postup. Celý návod krok za krokem pro Windows i macOS: **[docs/INSTALL.md](docs/INSTALL.md)**.
+
+## Modely
+
+Každý agent má pevně daný model podle toho, jak náročnou práci dělá:
+
+| Agent | Model | Proč |
+|---|---|---|
+| `clarity-analyst` | Sonnet | dlouhé procházení dashboardu se spoustou screenshotů, tokenově nejdražší část běhu |
+| `page-structure-analyst` | Sonnet | scrollování a inventura stránky podle playbooku |
+| `cro-strategist` | Opus | syntéza a samotný audit, tady rozhoduje kvalita |
+
+Command `/cro-operator:cro` běží na modelu tvé session.
+
+Chceš všechny agenty na jednom modelu? Nastav před spuštěním Claude Code obě proměnné (platí pro sub-agenty všech pluginů, nejen tohoto):
+
+```powershell
+$env:CLAUDE_CODE_SUBAGENT_MODEL = "sonnet"
+$env:CLAUDE_CODE_SUBAGENT_MODEL_FORCE = "1"
+```
+
+```bash
+export CLAUDE_CODE_SUBAGENT_MODEL=sonnet CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1
+```
+
+Trvale je dáš do `~/.claude/settings.json` pod klíč `env`.
 
 ## Použití
 

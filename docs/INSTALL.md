@@ -67,13 +67,13 @@ Instaluj **pevnou verzi** (tag) — nic se pak nezmění bez tvého vědomí.
 
 V terminálu:
 ```
-claude plugin marketplace add HonzaKase/cro-operator#v0.2.2
+claude plugin marketplace add HonzaKase/cro-operator#v0.2.3
 claude plugin install cro-operator@honza-kase
 ```
 
 Nebo uvnitř Claude Code:
 ```
-/plugin marketplace add HonzaKase/cro-operator#v0.2.2
+/plugin marketplace add HonzaKase/cro-operator#v0.2.3
 /plugin install cro-operator@honza-kase
 ```
 
